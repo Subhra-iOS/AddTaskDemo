@@ -11,6 +11,10 @@ import kotlinx.android.synthetic.main.activity_task_description.view.*
 
 class TaskDescriptionActivity : AppCompatActivity() {
 
+    /**
+     * static variable for Intent Result
+     * @author : Subhra Roy
+     */
     companion object{
         val EXTRA_TASK_DESCRIPTION = "task"
     }
@@ -24,8 +28,8 @@ class TaskDescriptionActivity : AppCompatActivity() {
     }
 
     /**
-     * Did done oprion
-     * @param Button view
+     * Did done option
+     * @param  view : Button view
      * @author : Subhra Roy
      */
     fun didTapDoneOnClick(view : View){
