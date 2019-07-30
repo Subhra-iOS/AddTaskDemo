@@ -10,9 +10,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
 import android.view.View
-import android.widget.Adapter
-import android.widget.ArrayAdapter
-import android.widget.TextView
+import android.widget.*
 import com.example.description.TaskDescriptionActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,11 +25,13 @@ class MainActivity : AppCompatActivity() {
     private val KEY_TASKS_LIST = "tasks_list"
 
     private val ADD_TASK_REQUEST = 1
-    private val taskList : MutableList<String> = mutableListOf()
-    private val listAdapter by lazy { makeListAdapterWith(list = taskList) }
+    private val taskList : MutableList<String> = mutableListOf<String>()
+    private val listAdapter by lazy { makeListAdapterWith(taskList) }
     private lateinit var timeLable : TextView
 
     private val timeStampReceiver by lazy { makeBroadCastReceiver() }
+
+    private lateinit var listView : ListView
 
     /**
      * Time Change broadcast from system
@@ -68,8 +68,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        listView = findViewById(R.id.listViewIdentifier) as ListView
+
+        listView.adapter = listAdapter
         timeLable = findViewById(R.id.dateLabelTextView)
         populateDataFromPreferenceStorage()
+
+        listView.onItemClickListener = AdapterView.OnItemClickListener({ _,
+        _, position, _ ->
+
+            println("Index : $position")
+
+        })
 
     }
 
@@ -85,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 it.isEmpty()
             }.toTypedArray()
             taskList.addAll(taskItems)
-            listAdapter.notifyDataSetChanged()
+
         }
     }
 
@@ -153,6 +163,7 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(descriptionIntent,ADD_TASK_REQUEST)
     }
 
-    private fun makeListAdapterWith(list : List<String>) : ArrayAdapter<String> =
-        ArrayAdapter(this,android.R.layout.activity_list_item,list)
+    private fun makeListAdapterWith(list: List<String>): ArrayAdapter<String> =
+        ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+
 }
