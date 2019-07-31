@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AddTaskDemo</string>
     <string name="action_settings">Settings</string>
+    <string name="alert_title">Confirm delete</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>

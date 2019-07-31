@@ -2,12 +2,14 @@
 package com.example.addtaskdemo
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         _, position, _ ->
 
             println("Index : $position")
+            didSelectItemFromListOnClickWith(position)
 
         })
 
@@ -131,6 +134,10 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+    }
+
     /**
      * Populate the result for call back Activity
      * @param : requestCode which is bind to Source Activity
@@ -165,5 +172,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun makeListAdapterWith(list: List<String>): ArrayAdapter<String> =
         ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+
+    private fun didSelectItemFromListOnClickWith(index : Int){
+
+        AlertDialog.Builder(this).setTitle(R.string.alert_title)
+            .setMessage(taskList[index])
+            .setPositiveButton(R.string.delete, { _, _ ->
+                taskList.removeAt(index)
+                listAdapter.notifyDataSetChanged()
+            }).setNegativeButton(R.string.cancel, { dialog, _ ->
+                dialog.dismiss()
+
+            }).create().show()
+
+    }
 
 }
