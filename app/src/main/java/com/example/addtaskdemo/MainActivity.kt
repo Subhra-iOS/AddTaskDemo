@@ -87,6 +87,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Initiate Adapter on assign
+     * @author : Subhra Roy
+     */
+    private fun makeListAdapterWith(list: List<String>): ArrayAdapter<String> =
+        ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+
+    /**
      * Populate data from Preference storage
      * @author : Subhra Roy
      */
@@ -169,9 +176,6 @@ class MainActivity : AppCompatActivity() {
         val descriptionIntent = Intent(this, TaskDescriptionActivity::class.java)
         startActivityForResult(descriptionIntent,ADD_TASK_REQUEST)
     }
-
-    private fun makeListAdapterWith(list: List<String>): ArrayAdapter<String> =
-        ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
 
     private fun didSelectItemFromListOnClickWith(index : Int){
 
